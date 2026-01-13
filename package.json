@@ -1,0 +1,21 @@
+{
+	"name": "auto-type",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "vitest",
+		"test-watch": "vitest --watch"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"devDependencies": {
+		"eslint": "^9.39.2",
+		"prettier": "^3.7.4",
+		"tsup": "^8.5.1",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.16"
+	}
+}
