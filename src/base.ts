@@ -1,6 +1,7 @@
 type PrimitiveTypes = boolean | string | number;
 
 export class Base {
+	private typeArray: string[] = [];
 	constructor() {}
 
 	inferTypesFromResponse = (data: any) => {
@@ -14,23 +15,46 @@ export class Base {
 			case "object":
 				return this.handleObjectType(data);
 			default:
+				console.warn(`Data type cannot be handled ${data}`);
 				break;
 		}
 	};
 
 	handleObjectType = (data: object): string[] => {
-		let typeArray: string[] = [];
-
 		if (Object.entries(data).length > 0) {
 			Object.values(data).map((d) => {
-				return typeArray.push(typeof d);
+				if (typeof d != "object") {
+					this.typeArray.push(typeof d);
+				} else {
+					const val = JSON.stringify(d);
+					if (val[0] == "[") {
+						this.handleArrayType(d);
+					} else if (val[0] == "{") {
+						this.inferTypesFromResponse(d);
+					}
+				}
 			});
 		}
 
-		return typeArray;
+		return this.typeArray;
 	};
 
-	handleArrayType = (data: any[]): string => {
-		return typeof data[0];
+	handleArrayType = (array: object) => {
+		if (Array.isArray(array)) {
+			switch (typeof array[0]) {
+				case "string":
+					this.typeArray.push("string[]");
+					break;
+				case "boolean":
+					this.typeArray.push("boolean[]");
+					break;
+				case "number":
+					this.typeArray.push("number[]");
+					break;
+				case "object":
+					this.handleObjectType(array);
+					break;
+			}
+		}
 	};
 }

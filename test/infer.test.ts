@@ -1,7 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { Base } from "../src/base";
+import { ApiRoute } from "../src/apiRoute";
 
 const base = new Base();
+
+const apiRoute = new ApiRoute();
+apiRoute.getPath();
 
 describe("inferTypesFromResponse", () => {
 	it("infers primitive types", () => {
@@ -13,11 +17,12 @@ describe("inferTypesFromResponse", () => {
 	it("infers objects", () => {
 		expect(
 			base.inferTypesFromResponse({
-				isSaved: true,
-				what: "this is something",
-				lets: ["string", "sssss"],
+				bool: true,
+				string: "this is something",
+				objectWithStringProp: { string: "wow" },
+				arrayOfStrings: ["string1", "string2"],
 			})
-		).toStrictEqual(["boolean", "string", "object"]);
+		).toStrictEqual(["boolean", "string", "string", "string[]"]);
 		expect(base.inferTypesFromResponse(null)).toBe(null);
 	});
 });
