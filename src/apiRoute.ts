@@ -2,13 +2,20 @@ import path from "node:path";
 import fs from "node:fs";
 
 export class ApiRoute {
-	getEndpoints() {
-		const dir = process.cwd();
-		const srcDir = path.join(`${dir}/src`);
+	public endpoints: string[] = [];
+	private currentDirectory: string;
+
+	constructor(currentDirectory: string) {
+		this.currentDirectory = currentDirectory;
+		this.getEndpoints();
+	}
+
+	public getEndpoints() {
+		const srcDir = path.join(`${this.currentDirectory}/src`);
 		this.scanDirectory(srcDir);
 	}
 
-	scanDirectory(directoryPath: string) {
+	private scanDirectory(directoryPath: string) {
 		const directoryChilds = fs.readdirSync(directoryPath, {
 			withFileTypes: true,
 		});
@@ -18,7 +25,7 @@ export class ApiRoute {
 				this.scanDirectory(childPath);
 			} else if (child.isFile()) {
 				if (child.name === "route.ts") {
-					return child.parentPath.split("/src")[1];
+					this.endpoints.push(child.parentPath.split("/src")[1]);
 				}
 			}
 		}

@@ -4,8 +4,8 @@ import { ApiRoute } from "../src/apiRoute";
 
 const base = new Base();
 
-const apiRoute = new ApiRoute();
-apiRoute.getEndpoints();
+const apiRoute = new ApiRoute(process.cwd());
+console.log(apiRoute.endpoints);
 
 describe("inferTypesFromResponse", () => {
 	it("infers primitive types", () => {
