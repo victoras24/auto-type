@@ -1,11 +1,14 @@
 import { describe, it, expect } from "vitest";
 import { Base } from "../src/base";
 import { ApiRoute } from "../src/apiRoute";
+import { Request } from "../src/request";
 
 const base = new Base();
 
 const apiRoute = new ApiRoute(process.cwd());
 console.log(apiRoute.endpoints);
+const request = new Request(apiRoute.endpoints);
+console.log(request);
 
 describe("inferTypesFromResponse", () => {
 	it("infers primitive types", () => {
