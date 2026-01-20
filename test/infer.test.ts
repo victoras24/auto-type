@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { Base } from "../src/base";
+import { InferTypes } from "../src/inferTypes";
 import { ApiRoute } from "../src/apiRoute";
 import { Request } from "../src/request";
 
-const base = new Base();
+const base = new InferTypes();
 
 const apiRoute = new ApiRoute(process.cwd());
 console.log(apiRoute.endpoints);
